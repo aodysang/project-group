@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>DYSHIRO — Minimal Fashion Startup</title>
+    <meta name="description" content="DYSHIRO แอป/เว็บจำหน่ายเสื้อยืดแนวมินิมอล Simple is Stylish" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="LOGO.png" type="image/x-icon">
+
+    <style>
+      :root {
+        --color-primary: #0d6efd;
+        --color-text-main: #212529;
+        --color-text-muted: #6c757d;
+        --color-bg-body: #f8f9fa;
+        --color-bg-card: #ffffff;
+        --color-border: #dee2e6;
+      }
+
+      .dark-mode {
+        --color-primary: #8cb4ff;
+        --color-text-main: #f8f9fa;
+        --color-text-muted: #adb5bd;
+        --color-bg-body: #212529;
+        --color-bg-card: #343a40;
+        --color-border: #495057;
+      }
+
+      html { scroll-behavior: smooth; }
+      
+      body { 
+        font-family: "Segoe UI", Arial, sans-serif; 
+        background: var(--color-bg-body) !important; 
+        color: var(--color-text-main) !important; 
+      }
+      
+      .navbar-brand img { width:32px; height:32px; margin-right:.5rem; }
+      
+      h1,h2,h3 { 
+        font-weight:700; 
+        color: var(--color-primary) !important; 
+      }
+
+      .hero, .bg-white, .bg-light, .card, footer {
+          background-color: var(--color-bg-card) !important;
+          color: var(--color-text-main) !important;
+      }
+      .text-muted {
+          color: var(--color-text-muted) !important;
+      }
+      .border-bottom, .border-top, .border {
+          border-color: var(--color-border) !important;
+      }
+      
+      .btn-outline-primary {
+          border-color: var(--color-primary);
+          color: var(--color-primary);
+      }
+      .btn-outline-primary:hover {
+          background-color: var(--color-primary);
+          color: var(--color-bg-card);
+      }
+
+      #cta.bg-primary {
+          background-color: var(--color-primary) !important;
+      }
+
+      .section-gap { padding:3rem 0; }
+      .product-img { width:100%; height:auto; }
+      .carousel-item img { width:70%; height:400px; object-fit:cover; border-radius:10px; }
+      @media (max-width:768px){
+        .carousel-item img{ width:90%; height:240px; }
+      }
+      
+      /* ================= Floating Bot Icon Styles ================= */
+      #chatbot-container {
+          position: fixed;
+          bottom: 25px;
+          right: 25px;
+          z-index: 9999;
+      }
+
+      #chatbot-toggle-btn {
+          width: 60px;
+          height: 60px;
+          background-color: var(--color-primary);
+          color: white;
+          border: none;
+          border-radius: 50%;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+
+      #chatbot-toggle-btn:hover {
+          transform: scale(1.08);
+      }
+    </style>
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg bg-white border-bottom">
+      <div class="container">
+        <a class="navbar-brand d-flex align-items-center fw-bold" href="#home">
+          <img src="phoo.png" alt="Logo"> DYSHIRO
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="nav" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#home">Header</a></li>
+            <li class="nav-item"><a href="features.html" class="nav-link">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about-company">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="Catalog.html">Catalog</a></li>
+            <li class="nav-item"><a class="nav-link" href="#social">Social</a></li>
+            
+            <li class="nav-item d-flex align-items-center ms-lg-2 mt-2 mt-lg-0">
+              <button id="themeToggle" class="btn btn-outline-secondary me-2">
+                ☀️ Light
+              </button>
+              <a class="btn btn-primary" href="Teammember.html">Team Members</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header id="home" class="hero">
+      <div class="container">
+        <div class="row mb-4 text-center">
+          <div class="col-12">
+            <h1 class="mb-3">Simple is Stylish</h1>
+            <p class="lead text-muted">
+              DYSHIRO คือแพลตฟอร์มเสื้อยืดแนวมินิมอล
+              เรียบง่าย ใส่ง่าย ดูดีได้ทุกวัน
+            </p>
+            <a class="btn btn-primary btn-lg me-2" href="https://www.figma.com/proto/QTVuNSAw5RM2hbklFN5XGI/store-Dyshiro?node-id=4035-643" target="_blank">SHOP NOW!</a>
+            <a class="btn btn-outline-primary btn-lg" href="#features">ดูฟีเจอร์</a>
+          </div>
+        </div>
+
+        <section class="text-center bg-white">
+          <div class="container">
+            <h2 class="fw-bold mb-4">Our Space</h2>
+            <p class="text-muted mb-4">บรรยากาศเรียบง่ายและอบอุ่นของ DYSHIRO</p>
+
+            <div id="plantCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#plantCarousel" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#plantCarousel" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#plantCarousel" data-bs-slide-to="2"></button>
+                <button type="button" data-bs-target="#plantCarousel" data-bs-slide-to="3"></button>
+              </div>
+
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="S-CUPCAT.jpg" alt="Space 1">
+                </div>
+                <div class="carousel-item">
+                  <img src="S-GEO.png" class="d-block mx-auto shadow-sm" alt="Space 2">
+                </div>
+                <div class="carousel-item">
+                  <img src="S-JP.png" class="d-block mx-auto shadow-sm" alt="Space 3">
+                </div>
+                <div class="carousel-item">
+                  <img src="S-Panda.png" class="d-block mx-auto shadow-sm" alt="Space 4">
+                </div>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#plantCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#plantCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </header>
+
+    <section id="features" class="section-gap">
+      <div class="container text-center">
+        <h2 class="mb-3">Features</h2>
+        <p class="text-muted mb-4">ฟีเจอร์หลักของ DYSHIRO</p>
+
+        <div class="row g-3">
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">Minimal Storefront</h5>
+                <p class="text-muted small">หน้าร้านเรียบง่าย เน้นภาพสินค้า ใช้งานสบายตา</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">Responsive Design</h5>
+                <p class="text-muted small">รองรับ Desktop, Tablet, Mobile ด้วย Bootstrap</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title fw-bold">Easy Checkout</h5>
+                <p class="text-muted small">ขั้นตอนสั่งซื้อสั้น กระชับ และเข้าใจง่าย</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="py-5 bg-light">
+      <div class="container text-center">
+        <h2 class="mb-4">Our Collection</h2>
+        <p class="text-muted mb-5">เสื้อยืดคอลเลกชันใหม่จาก DYSHIRO — เรียบง่ายแต่ดูดีในทุกโอกาส</p>
+        <div class="row">
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="CAPCAT.png" class="card-img-top" alt="เสื้อแมวในถ้วย">
+              <div class="card-body">
+                <h6 class="fw-semibold">Cat Cup Tee</h6>
+                <p class="small text-muted mb-2">มินิมอลอบอุ่น เหมาะกับทุกวัน</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="GEO.png" class="card-img-top" alt="เสื้อกราฟิกเรขาคณิต">
+              <div class="card-body">
+                <h6 class="fw-semibold">Geo Form Tee</h6>
+                <p class="small text-muted mb-2">ดีไซน์เรขาคณิต เรียบแต่เท่</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="JP.png" class="card-img-top" alt="เสื้อปักนกกระเรียน">
+              <div class="card-body">
+                <h6 class="fw-semibold">Crane Art Tee</h6>
+                <p class="small text-muted mb-2">ลวดลายญี่ปุ่นคลาสสิก</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100">
+              <img src="PANDA.png" class="card-img-top" alt="เสื้อแพนด้าน่ารัก">
+              <div class="card-body">
+                <h6 class="fw-semibold">Panda Soft Tee</h6>
+                <p class="small text-muted mb-2">น่ารักอบอุ่น ดูสบายตา</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about-company" class="py-5 bg-white text-center">
+      <div class="container">
+        <h2 class="fw-bold mb-3">About Company</h2>
+        <p class="text-muted mx-auto" style="max-width:700px;">
+          DYSHIRO เป็นบริษัท Startup ด้านแฟชั่นที่พัฒนาแอปและเว็บไซต์จำหน่ายเสื้อยืดแนวมินิมอล
+          ภายใต้แนวคิด “Simple is Stylish” โดยมุ่งเน้นประสบการณ์ผู้ใช้ที่เรียบง่ายและทันสมัย
+          เพื่อให้ทุกคนสามารถเลือกสไตล์ที่เป็นตัวเองได้ง่ายขึ้น
+        </p>
+        <p class="text-muted small mb-0">ก่อตั้งโดยนักศึกษาสาขาเทคโนโลยีสารสนเทศ — สถาบันการจัดการปัญญาภิวัฒน์ (PIM)</p>
+      </div>
+    </section>
+
+    <section id="testimonials" class="section-gap bg-light">
+      <div class="container">
+        <h2 class="text-center mb-4">Reviews</h2>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="mb-2">“เสื้อสวย ใส่ง่าย คุณภาพดี คัตติ้งเนี้ยบมาก”</p>
+                <div class="small text-muted">— Customer A</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <p class="mb-2">“เว็บใช้งานง่าย สั่งซื้อรวดเร็ว ส่งไว”</p>
+                <div class="small text-muted">— Customer B</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="cta" class="py-5 text-center bg-primary text-white">
+      <div class="container">
+        <h3 class="fw-bold mb-3 text-white">เริ่มต้นประสบการณ์ใหม่กับ DYSHIRO วันนี้!</h3>
+        <p class="mb-4">สมัครสมาชิกเพื่อรับส่วนลดพิเศษ และข่าวสารจากเรา</p>
+        <a href="#" class="btn btn-light btn-lg me-2">สมัครเลย</a>
+      </div>
+    </section>
+
+    <section id="social" class="section-gap bg-light text-center">
+      <div class="container">
+        <h3 class="mb-3">ติดตามเรา</h3>
+        <p class="text-muted mb-4">เชื่อมต่อกับ DYSHIRO เพื่ออัปเดตข่าวสารและโปรโมชั่นใหม่ ๆ</p>
+        <div class="d-flex justify-content-center flex-wrap gap-2">
+          <a class="btn btn-outline-primary" href="https://www.facebook.com/pimfanpage?locale=th_TH" target="_blank">Facebook</a>
+          <a class="btn btn-outline-primary" href="https://www.instagram.com/store_dyshiro?igsh=dTd6amF4bnM5ZnAx&utm_source=qr" target="_blank">Instagram</a>
+          <a class="btn btn-outline-primary" href="https://pim.ac.th" target="_blank">PIM</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-3 bg-white border-top">
+      <div class="container text-center">
+        <p class="small text-muted mb-0">© 2025 DYSHIRO — Simple is Stylish</p>
+      </div>
+    </footer>
+
+    <!-- ================= Floating Bot Icon & Chatbot Placeholder ================= -->
+    <div id="chatbot-container">
+        <!-- ปุ่มไอคอนบอทลอยมุมขวาล่าง -->
+        <button id="chatbot-toggle-btn" title="แชทกับบอท DYSHIRO">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.343-.306l-4.522 1.158A.5.5 0 0 1 14.61 15.8l1.058-4.234A7.001 7.001 0 0 1 16 8zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+            </svg>
+        </button>
+
+        <!-- พื้นที่ว่างสำหรับนำโค้ดแชทบอทจริงมาใส่ในอนาคต -->
+        <div id="chatbot-window-placeholder">
+            <!-- [ ใส่โค้ดแชทบอทจริง / Script จากผู้ให้บริการภายนอก ตรงนี้ในอนาคตได้เลยครับ ] -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // 1. ระบบ Theme (Light / Dark)
+      const toggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggle.innerHTML = '🌙 Dark';
+      }
+
+      toggle.addEventListener('click', () => {
+        if (body.classList.contains('dark-mode')) {
+          body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+          toggle.innerHTML = '☀️ Light';
+        } else {
+          body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+          toggle.innerHTML = '🌙 Dark';
+        }
+      });
+    </script>
+  </body>
+</html>

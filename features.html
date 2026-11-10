@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Features — DYSHIRO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="LOGO.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+
+      :root {
+        --color-primary: #5f97ec;
+        --color-text-main: #212529;
+        --color-text-muted: #ffffff;
+        --color-bg-body: #ffffff;
+        --color-bg-card: #ffffff;
+        --color-border: #ffffff;
+      }
+
+      .dark-mode {
+        --color-primary: #8cb4ff;
+        --color-text-main: #f8f9fa;
+        --color-text-muted: #adb5bd;
+        --color-bg-body: #212529;
+        --color-bg-card: #343a40;
+        --color-border: #495057;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      h1, h2, h3, h4 {
+        color: #0d6efd;
+        font-weight: 700;
+      }
+
+      .bg-white, .bg-light, .card, footer {
+      background-color: var(--color-bg-card) !important;
+      color: var(--color-text-main) !important;
+      }
+
+      .feature-icon {
+        font-size: 36px;
+        color: #0d6efd;
+        margin-bottom: 10px;
+      }
+      footer {
+        background-color: #fff;
+        border-top: 1px solid #dee2e6;
+        padding: 15px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">
+          <img src="phoo.png" width="30" height="30" class="d-inline-block align-text-top me-2" alt="Logo">
+          DYSHIRO
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="features.html">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="Teammember.html">Team Members</a></li>
+
+ <li class="nav-item ms-lg-2">
+              <button id="themeToggle" class="btn btn-outline-secondary mt-2 mt-lg-0">
+                ☀️ Light
+              </button>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="py-5 bg-white text-center">
+      <div class="container">
+        <h1 class="mb-3">ระบบและคุณสมบัติของ DYSHIRO</h1>
+        <p class="text-muted">
+          DYSHIRO คือแพลตฟอร์มแฟชั่นออนไลน์แนวมินิมอล ที่ผสานเว็บไซต์และแอปพลิเคชันเข้าด้วยกัน 
+          เพื่อให้ผู้ใช้เลือกซื้อและบริหารจัดการสินค้าได้อย่างสะดวก รวดเร็ว และสวยงามในทุกอุปกรณ์
+        </p>
+      </div>
+    </header>
+
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-3">System Overview</h2>
+        <p class="text-muted">
+          ระบบ DYSHIRO แบ่งออกเป็น 2 ส่วนหลัก ได้แก่ <b>Web Application</b> สำหรับการซื้อ-ขายสินค้า  
+          และ <b>Mobile Application</b> สำหรับลูกค้าและสมาชิก โดยใช้ฐานข้อมูลกลางที่เชื่อมโยงแบบเรียลไทม์
+        </p>
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">💻</div>
+              <h5>Web Platform</h5>
+              <p class="text-muted small">
+                เว็บไซต์หลักออกแบบให้ใช้งานง่าย รองรับทุกขนาดหน้าจอด้วย Bootstrap 5 และ Responsive Layout
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">📱</div>
+              <h5>Mobile Application</h5>
+              <p class="text-muted small">
+                แอปมือถือช่วยให้ลูกค้าดูสินค้า ลองสวมเสื้อ (AR Try-on) และรับการแจ้งเตือนโปรโมชั่นได้ทันที
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 text-center">
+        <h2 class="mb-4">Web System Features</h2>
+        <div class="row g-4">
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">🛒</div>
+              <h5>Product Catalog</h5>
+              <p class="text-muted small">แสดงสินค้าเสื้อยืดพร้อมภาพ รายละเอียด ขนาด และราคา</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">💳</div>
+              <h5>Order & Payment</h5>
+              <p class="text-muted small">รองรับตะกร้าสินค้าและการชำระเงินออนไลน์ผ่าน QR หรือบัตรเครดิต</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">📦</div>
+              <h5>Delivery Tracking</h5>
+              <p class="text-muted small">ตรวจสอบการจัดส่งสินค้าและสต็อกแบบเรียลไทม์ผ่านหน้าเว็บ</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-light text-center">
+      <div class="container">
+        <h2 class="mb-4">Mobile Application Features</h2>
+        <div class="row g-4">
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">🧍‍♂️</div>
+              <h5>Virtual Try-On</h5>
+              <p class="text-muted small">ทดลองสวมเสื้อเสมือนจริงก่อนตัดสินใจซื้อผ่านกล้องมือถือ</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">🔔</div>
+              <h5>Smart Notification</h5>
+              <p class="text-muted small">แจ้งเตือนโปรโมชั่นและสินค้าใหม่แบบเรียลไทม์</p>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="p-4 bg-white border h-100">
+              <div class="feature-icon">👤</div>
+              <h5>Member System</h5>
+              <p class="text-muted small">ระบบสมาชิกสะสมแต้ม ดูประวัติการสั่งซื้อ และรับสิทธิพิเศษ</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5 bg-primary text-white text-center">
+      <div class="container">
+        <h3 class="fw-bold mb-3">พร้อมเริ่มต้นกับ DYSHIRO แล้วหรือยัง?</h3>
+        <p class="mb-4">สมัครสมาชิกเพื่อรับส่วนลดและสิทธิพิเศษจากเรา</p>
+        <a href="index.html" class="btn btn-light btn-lg me-2">กลับสู่หน้าแรก</a>
+        <a href="about.html" class="btn btn-outline-light btn-lg">ดูสมาชิกทีม</a>
+      </div>
+    </section>
+
+    <footer class="text-center">
+      <div class="container">
+        <p class="small text-muted mb-0">© 2025 DYSHIRO — Simple is Stylish</p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>    
+const toggle = document.getElementById('themeToggle');
+const body = document.body;
+
+if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggle.innerHTML = '🌙 Dark';
+      }
+
+toggle.addEventListener('click', () => {
+if (body.classList.contains('dark-mode')) {
+body.classList.remove('dark-mode');
+localStorage.setItem('theme', 'light');
+toggle.innerHTML = '☀️ Light';
+} 
+else {
+body.classList.add('dark-mode');
+localStorage.setItem('theme', 'dark');
+toggle.innerHTML = '🌙 Dark';
+}
+});
+
+</script>
+  </body>
+</html>
