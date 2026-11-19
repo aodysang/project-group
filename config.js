@@ -19,16 +19,16 @@ window.CONFIG = {
   // เริ่มด้วย local ก่อนเสมอ  แล้วค่อยเปลี่ยนเป็น vector หลังสร้าง vectors.json
   SEARCH_MODE: "local",
 
-  // รุ่นที่ใช้แปลงเวกเตอร์  ต้องตรงกับตอนสร้าง vectors.json
-  EMBED_MODEL: "nvidia/nemotron-3.5-lightning:free",
+  // รุ่นที่ใช้แปลงเวกเตอร์  (ต้องใช้ตัว embed นี้เท่านั้น ห้ามเปลี่ยน)
+  EMBED_MODEL: "nvidia/nemotron-3.5-embed-1b:free",
 
   VECTORS_FILE: "vectors.json",
 
 
   /* ===== การตอบคำถาม ===== */
 
-  // ชื่อรุ่นโมเดลฟรีจาก OpenRouter
-  MODEL: "google/gemma-4-26b-a4b-it:free",
+  // ใช้ openrouter/free เพื่อเลือกโมเดลฟรีที่ว่างให้โดยอัตโนมัติ ไม่ติดคิว 429
+  MODEL: "openrouter/free",
 
 
   /* ===== เอกสาร ===== */
