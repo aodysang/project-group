@@ -347,10 +347,20 @@ async function askBot(question){
 #pimbot-head{background:${C.main}; color:#fff; padding:14px 17px; position:relative}
 #pimbot-head b{font-size:16px; font-weight:600}
 #pimbot-head small{display:block; font-size:12px; color:${C.soft}; margin-top:2px}
+#pimbot-head-actions{
+  position:absolute; top:11px; right:12px;
+  display:flex; align-items:center; gap:6px;
+}
+#pimbot-human-btn{
+  background:rgba(255,255,255,.16); color:#fff;
+  border:1px solid rgba(255,255,255,.35); border-radius:999px;
+  padding:4px 10px; font-size:12px; text-decoration:none;
+  cursor:pointer; white-space:nowrap; transition:background .2s;
+}
+#pimbot-human-btn:hover{background:rgba(255,255,255,.28)}
 #pimbot-close{
-  position:absolute; top:10px; right:12px;
   background:none; border:0; color:#fff; font-size:22px; line-height:1;
-  cursor:pointer; width:32px; height:32px;
+  cursor:pointer; width:30px; height:30px; display:grid; place-items:center;
 }
 #pimbot-warn{
   background:${C.bg}; border-bottom:1px solid ${C.line};
@@ -401,7 +411,10 @@ async function askBot(question){
 
 <div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม">
   <div id="pimbot-head">
-    <button id="pimbot-close" aria-label="ปิด">×</button>
+    <div id="pimbot-head-actions">
+      <a id="pimbot-human-btn" href="Teammember.html" title="ติดต่อทีมงาน DYSHIRO">ติดต่อเจ้าหน้าที่</a>
+      <button id="pimbot-close" aria-label="ปิด">×</button>
+    </div>
     <b>DYSHIRO Assistant</b>
     <small id="pimbot-status">กำลังเตรียมระบบ...</small>
   </div>
@@ -415,6 +428,7 @@ async function askBot(question){
 
   <div id="pimbot-chips">
     <span>ตารางไซซ์และราคาเสื้อ</span>
+    <span>Geo Form Tee มีสีอะไรบ้าง</span>
     <span>ค่าจัดส่งเท่าไหร่</span>
     <span>เปลี่ยนไซซ์ได้ไหม</span>
   </div>
