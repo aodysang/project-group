@@ -118,6 +118,60 @@
       @media (max-width:768px){
         .carousel-item img{ width:90%; height:240px; }
       }
+
+      /* ================= Premium Shimmer Button (SHOP NOW!) ================= */
+      .btn-shop-premium {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 50%, #3b82f6 100%);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffffff !important;
+        font-weight: 600;
+        letter-spacing: 0.6px;
+        border-radius: 12px;
+        padding: 0.72rem 1.85rem;
+        box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+      }
+
+      .btn-shop-premium::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -120%;
+        width: 75%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.15) 35%,
+          rgba(255, 255, 255, 0.65) 50%,
+          rgba(255, 255, 255, 0.15) 65%,
+          transparent 100%
+        );
+        transform: skewX(-22deg);
+        animation: shimmerSweep 3.2s infinite ease-in-out;
+      }
+
+      @keyframes shimmerSweep {
+        0%   { left: -120%; }
+        45%  { left: 140%; }
+        100% { left: 140%; }
+      }
+
+      .btn-shop-premium:hover {
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 10px 28px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        color: #ffffff !important;
+      }
+
+      .btn-shop-premium:active {
+        transform: translateY(0) scale(0.98);
+      }
+
+      .dark-mode .btn-shop-premium {
+        box-shadow: 0 0 22px rgba(96, 165, 250, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      }
     </style>
   </head>
   <body>
@@ -159,7 +213,7 @@
               DYTORRO คือแพลตฟอร์มเสื้อยืดแนวมินิมอล
               เรียบง่าย ใส่ง่าย ดูดีได้ทุกวัน
             </p>
-            <a class="btn btn-primary btn-lg me-2" href="https://www.figma.com/proto/QTVuNSAw5RM2hbklFN5XGI/store-Dyshiro?node-id=4035-643" target="_blank">SHOP NOW!</a>
+            <a class="btn btn-shop-premium btn-lg me-2" href="https://www.figma.com/proto/QTVuNSAw5RM2hbklFN5XGI/store-Dyshiro?node-id=4035-643" target="_blank">SHOP NOW!</a>
             <a class="btn btn-outline-primary btn-lg" href="#features">ดูฟีเจอร์</a>
           </div>
         </div>
