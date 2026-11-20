@@ -1,20 +1,8 @@
 /* ==================================================================
-   chat-widget.js  ·  แชตบอตสำหรับร้านเสื้อผ้า DYSHIRO
-
-   วิธีใช้  เพิ่มบรรทัดเดียวก่อนปิด </body> ของหน้าเว็บ
-
-       <script src="chat-widget.js"></script>
-
-   ไฟล์ที่ต้องมีในโฟลเดอร์เดียวกัน
-       config.js        ไฟล์ตั้งค่า
-       docs/            เอกสารที่แชตบอตจะตอบจาก
-       vectors.json     ถ้าใช้โหมด vector
-
-   กุญแจไม่ได้อยู่ในไฟล์นี้  อยู่บน Cloudflare Worker
+   chat-widget.js  ·  แชตบอตสำหรับร้านเสื้อผ้า DYTORRO
    ================================================================== */
 
 (function(){
-  // โหลด config.js แบบกันเบราว์เซอร์จำไฟล์เก่า
   const s = document.createElement("script");
   s.src = "config.js?t=" + Date.now();
   s.onerror = () => console.error("ไม่พบไฟล์ config.js  วางไว้โฟลเดอร์เดียวกับหน้าเว็บ");
@@ -190,10 +178,10 @@ async function findChunks(question){
 function makePrompt(question, found){
   const docs = found.map((f, i) =>
     `[ชิ้นที่ ${i + 1}  จากไฟล์ ${f.source}]\n${f.text}`).join("\n\n");
-  return `คุณคือผู้ช่วยตอบคำถามของร้านเสื้อผ้า DYSHIRO
+  return `คุณคือผู้ช่วยตอบคำถามของร้านเสื้อผ้า DYTORRO
 ให้ตอบโดยใช้เฉพาะข้อมูลในเอกสารด้านล่างเท่านั้น
 
-ถ้าเอกสารไม่มีคำตอบ ให้ตอบว่า "ไม่พบข้อมูลนี้ในเอกสารของร้าน DYSHIRO"
+ถ้าเอกสารไม่มีคำตอบ ให้ตอบว่า "ไม่พบข้อมูลนี้ในเอกสารของร้าน DYTORRO"
 แล้วแนะนำให้ติดต่อแอดมินร้านโดยตรง  ห้ามเดา ห้ามเติมข้อมูลจากความรู้ทั่วไป
 
 ตอบเป็นภาษาไทย สุภาพ สั้น กระชับ
@@ -240,8 +228,7 @@ function bootLine(){
   const files = new Set(CHUNKS.map(c => c.source)).size;
   const pv = PROVIDERS[CFG.PROVIDER]?.name ?? CFG.PROVIDER;
   const m = MODE === "vector" ? "เวกเตอร์" : "เทียบตัวอักษร";
-  return `พร้อมใช้งาน   เอกสาร ${files} ไฟล์  ${CHUNKS.length} ชิ้น   `
-       + `ค้นแบบ ${m}   ตอบด้วย ${pv}`;
+  return `พร้อมใช้งาน · เอกสาร ${files} ไฟล์ (${m})`;
 }
 
 /* ---------- เริ่มระบบ ---------- */
@@ -253,7 +240,7 @@ window.__startApp = async () => {
   if (needKey && (!CFG.KEY || CFG.KEY.startsWith("ใส่กุญแจ"))) {
     boot("ยังไม่ได้ใส่กุญแจ  หรือเบราว์เซอร์ยังใช้ไฟล์เก่า\n\n"
        + "1 เปิด config.js ตรง ๆ ในแท็บใหม่ ดูว่ามีกุญแจจริงไหม\n"
-       + "2 ถ้ามี ให้กด Ctrl และ Shift และ R\n"
+       + "2 ถ้ามี ให้กด Ctrl และ Shift + R\n"
        + "3 ถ้าไม่มี แปลว่ายังไม่ได้ Commit");
     return;
   }
@@ -267,14 +254,14 @@ window.__startApp = async () => {
   }
 
   try {
-    boot("กำลังอ่านเอกสาร...");
+    boot("กำลังเชื่อมต่อคลังข้อมูล...");
     CHUNKS = await buildChunks();
     INDEX = CHUNKS.map(c => grams(c.text));
 
     MODE = "local";
     if ((CFG.SEARCH_MODE || "local") === "vector") {
       try {
-        boot("กำลังโหลดไฟล์เวกเตอร์...");
+        boot("กำลังโหลดเวกเตอร์...");
         VEC = await loadVectors();
         MODE = "vector";
       } catch (e) {
@@ -295,104 +282,192 @@ async function askBot(question){
   if (!READY) throw new Error("ระบบยังไม่พร้อม");
   const { found, how } = await findChunks(question);
   const answer = await askLLM(makePrompt(question, found));
-  const refs = `ค้นแบบ${how}   ` +
-    found.map(f => `${f.source} ส่วนที่ ${f.part} (${f.score})`).join("   ");
+  const refs = `ค้นแบบ${how} · ` +
+    found.map(f => `${f.source} ส่วนที่ ${f.part} (${f.score})`).join(" · ");
   return { answer, refs };
 }
 
 /* ==================================================================
-   ส่วนหน้าตาของกล่องแชต  โทนมินิมอลร้าน DYSHIRO
+   ส่วนหน้าตาของกล่องแชต โทนพรีเมียม DYTORRO (Modern Obsidian & Blue)
    ================================================================== */
 (function(){
 
   const C = {
-    main:  "#18181B",   // สีดำชาร์โคลมินิมอล
-    accent:"#2563EB",   // สีน้ำเงินปุ่มส่ง (เข้ากับปุ่มเว็บ)
-    ink:   "#18181B",
-    soft:  "#E4E4E7",
-    line:  "#E4E4E7",
-    bg:    "#F4F4F5",
-    card:  "#FFFFFF",
-    muted: "#52525B",
+    main:    "#09090B",
+    accent:  "#2563EB",
+    accent2: "#1D4ED8",
+    ink:     "#18181B",
+    soft:    "#A1A1AA",
+    line:    "#E4E4E7",
+    bg:      "#F8FAFC",
+    card:    "#FFFFFF",
+    muted:   "#64748B",
   };
 
   const css = `
+/* ปุ่มไอคอนแชตพรีเมียมมุมขวาล่าง */
 #pimbot-btn{
   position:fixed; right:24px; bottom:24px; z-index:9999;
-  width:60px; height:60px; border-radius:50%; border:0; cursor:pointer;
-  background:${C.main}; color:#fff;
-  box-shadow:0 6px 24px rgba(0,0,0,.25);
+  width:62px; height:62px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.22);
+  cursor:pointer;
+  background: linear-gradient(135deg, #2563EB 0%, #1E3A8A 60%, #09090B 100%);
+  color:#fff;
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.45), 0 0 0 0 rgba(37, 99, 235, 0.5);
   display:grid; place-items:center;
-  font-family:'Anuphan',system-ui,sans-serif;
-  transition:transform .15s;
+  transition: transform .25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .25s ease;
+  animation: pimbotPulse 3s infinite;
   margin-bottom: env(safe-area-inset-bottom, 0px);
 }
-#pimbot-btn:hover{transform:scale(1.06)}
-#pimbot-btn svg{width:27px; height:27px}
+@keyframes pimbotPulse {
+  0%   { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0.55); }
+  70%  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 13px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+#pimbot-btn:hover{
+  transform: translateY(-3px) scale(1.07);
+  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.65);
+}
+#pimbot-btn svg{width:30px; height:30px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 #pimbot-dot{
-  position:absolute; top:4px; right:4px; width:13px; height:13px;
-  border-radius:50%; background:#2bb673; border:2px solid #fff;
+  position:absolute; top:3px; right:3px; width:14px; height:14px;
+  border-radius:50%; background:#10B981; border:2.5px solid #09090B;
+  box-shadow: 0 0 8px #10B981;
 }
+
+/* กล่องแชตหลัก */
 #pimbot-panel{
-  position:fixed; right:24px; bottom:96px; z-index:9999;
-  width:min(390px, calc(100vw - 32px));
-  background:${C.card}; border:1px solid ${C.line}; border-radius:14px;
+  position:fixed; right:24px; bottom:98px; z-index:9999;
+  width:min(395px, calc(100vw - 32px));
+  background:${C.card}; border:1px solid rgba(37,99,235,0.18); border-radius:18px;
   overflow:hidden; display:none;
-  box-shadow:0 16px 48px rgba(0,0,0,.22);
-  font-family:'Anuphan','Noto Sans Thai',system-ui,sans-serif;
-  font-size:16px; line-height:1.65; color:${C.ink};
+  box-shadow:0 20px 55px rgba(9, 9, 11, 0.28);
+  font-family:'Anuphan','Noto Sans Thai','Segoe UI',system-ui,sans-serif;
+  font-size:15px; line-height:1.65; color:${C.ink};
   margin-bottom: env(safe-area-inset-bottom, 0px);
 }
-#pimbot-panel.pimbot-open{display:block}
-#pimbot-head{background:${C.main}; color:#fff; padding:14px 17px; position:relative}
-#pimbot-head b{font-size:16px; font-weight:600}
-#pimbot-head small{display:block; font-size:12px; color:${C.soft}; margin-top:2px}
+#pimbot-panel.pimbot-open{
+  display:block;
+  animation: pimbotSlideUp .24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@keyframes pimbotSlideUp {
+  from { opacity:0; transform: translateY(14px) scale(0.97); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* ส่วนหัวกล่องแชต */
+#pimbot-head{
+  background: linear-gradient(135deg, #09090B 0%, #1E293B 100%);
+  color:#fff; padding:15px 18px; position:relative;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.pimbot-brand-row{
+  display:flex; align-items:center; gap:10px; padding-right:115px;
+}
+.pimbot-avatar{
+  width:36px; height:36px; border-radius:50%;
+  background: linear-gradient(135deg, #2563EB, #60A5FA);
+  display:grid; place-items:center; flex-shrink:0;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.45);
+  overflow:hidden;
+}
+.pimbot-avatar img{
+  width:24px; height:24px; object-fit:contain;
+}
+#pimbot-head b{font-size:15.5px; font-weight:700; letter-spacing:0.3px; display:block; line-height:1.25}
+#pimbot-head small{display:block; font-size:11.5px; color:#94A3B8; margin-top:2px}
+
 #pimbot-head-actions{
-  position:absolute; top:11px; right:12px;
+  position:absolute; top:14px; right:12px;
   display:flex; align-items:center; gap:6px;
 }
 #pimbot-human-btn{
-  background:rgba(255,255,255,.16); color:#fff;
-  border:1px solid rgba(255,255,255,.35); border-radius:999px;
-  padding:4px 10px; font-size:12px; text-decoration:none;
-  cursor:pointer; white-space:nowrap; transition:background .2s;
+  background: rgba(37, 99, 235, 0.22);
+  color:#93C5FD;
+  border:1px solid rgba(96, 165, 250, 0.45);
+  border-radius:999px;
+  padding:4px 11px; font-size:11.5px; font-weight:600;
+  text-decoration:none; cursor:pointer; white-space:nowrap;
+  transition: all .2s;
 }
-#pimbot-human-btn:hover{background:rgba(255,255,255,.28)}
+#pimbot-human-btn:hover{
+  background:#2563EB; color:#fff; border-color:#2563EB;
+}
 #pimbot-close{
-  background:none; border:0; color:#fff; font-size:22px; line-height:1;
-  cursor:pointer; width:30px; height:30px; display:grid; place-items:center;
+  background:rgba(255,255,255,0.08); border:0; color:#CBD5E1;
+  font-size:19px; line-height:1; border-radius:50%;
+  cursor:pointer; width:28px; height:28px; display:grid; place-items:center;
+  transition: background .2s, color .2s;
 }
+#pimbot-close:hover{background:rgba(255,255,255,0.2); color:#fff}
+
+/* แถบแจ้งเตือน AI */
 #pimbot-warn{
-  background:${C.bg}; border-bottom:1px solid ${C.line};
-  padding:10px 17px; font-size:12px; line-height:1.6; color:${C.muted};
+  background: #EFF6FF;
+  border-bottom:1px solid #DBEAFE;
+  padding:9px 16px; font-size:12px; line-height:1.55; color:#1E3A8A;
 }
-#pimbot-warn b{color:${C.main}}
-#pimbot-log{height:290px; overflow-y:auto; padding:14px 16px; background:${C.bg}}
+#pimbot-warn b{color:#1D4ED8}
+
+/* พื้นที่ข้อความแชต */
+#pimbot-log{height:285px; overflow-y:auto; padding:14px 16px; background:${C.bg}}
 .pimbot-m{
-  max-width:85%; padding:10px 14px; border-radius:12px; margin:8px 0;
-  font-size:14.5px; white-space:pre-wrap; line-height:1.65;
+  max-width:85%; padding:11px 14px; border-radius:14px; margin:8px 0;
+  font-size:14px; white-space:pre-wrap; line-height:1.6;
 }
-.pimbot-me{margin-left:auto; background:${C.main}; color:#fff; border-bottom-right-radius:4px}
-.pimbot-bot{background:${C.card}; border:1px solid ${C.line}; border-bottom-left-radius:4px}
-.pimbot-src{display:block; margin-top:7px; font-size:11px; color:${C.muted}}
-#pimbot-chips{padding:0 16px 10px; display:flex; flex-wrap:wrap; gap:6px; background:${C.bg}}
+.pimbot-me{
+  margin-left:auto;
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color:#fff; border-bottom-right-radius:4px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+.pimbot-bot{
+  background:${C.card}; border:1px solid ${C.line};
+  border-bottom-left-radius:4px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+.pimbot-src{
+  display:block; margin-top:7px; padding-top:5px;
+  border-top:1px dashed #E2E8F0;
+  font-size:11px; color:${C.muted};
+}
+
+/* ปุ่มคำถามแนะนำ */
+#pimbot-chips{padding:4px 14px 10px; display:flex; flex-wrap:wrap; gap:6px; background:${C.bg}}
 #pimbot-chips span{
-  font-size:12px; padding:5px 11px; border:1px solid ${C.line};
-  border-radius:999px; cursor:pointer; color:${C.muted}; background:${C.card};
+  font-size:12px; padding:5px 12px;
+  border:1px solid #CBD5E1; border-radius:999px;
+  cursor:pointer; color:#334155; background:${C.card};
+  transition: all .2s;
 }
-#pimbot-chips span:hover{border-color:${C.main}; color:${C.main}}
-#pimbot-row{display:flex; gap:8px; padding:12px 14px; border-top:1px solid ${C.line}}
+#pimbot-chips span:hover{
+  border-color:#2563EB; color:#2563EB; background:#EFF6FF;
+  transform: translateY(-1px);
+}
+
+/* ช่องพิมพ์ข้อความและปุ่มส่ง */
+#pimbot-row{display:flex; gap:8px; padding:11px 14px; border-top:1px solid ${C.line}; background:${C.card}}
 #pimbot-q{
-  flex:1; padding:10px 14px; font-family:inherit; font-size:14.5px;
-  border:1px solid ${C.line}; border-radius:9px; background:${C.card}; color:${C.ink};
+  flex:1; padding:10px 14px; font-family:inherit; font-size:14px;
+  border:1.5px solid #CBD5E1; border-radius:11px; background:#F8FAFC; color:${C.ink};
+  transition: border-color .2s, background .2s;
 }
-#pimbot-q:focus{outline:2px solid ${C.main}; outline-offset:1px}
+#pimbot-q:focus{
+  outline:none; border-color:#2563EB; background:#FFFFFF;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
 #pimbot-send{
-  padding:10px 20px; border:0; border-radius:9px;
-  background:${C.accent}; color:#FFFFFF;
-  font-family:inherit; font-size:14.5px; font-weight:600; cursor:pointer;
+  padding:10px 18px; border:0; border-radius:11px;
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color:#FFFFFF; font-family:inherit; font-size:14px; font-weight:600;
+  cursor:pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: transform .15s, box-shadow .15s;
 }
-#pimbot-send:disabled{opacity:.45; cursor:default}
+#pimbot-send:hover:not(:disabled){
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.42);
+}
+#pimbot-send:disabled{opacity:.45; cursor:default; box-shadow:none}
 `;
 
   const style = document.createElement("style");
@@ -401,27 +476,36 @@ async function askBot(question){
 
   const wrap = document.createElement("div");
   wrap.innerHTML = `
-<button id="pimbot-btn" aria-label="เปิดกล่องสอบถาม">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+<button id="pimbot-btn" aria-label="เปิดผู้ช่วย DYTORRO" title="คุยกับผู้ช่วย AI ร้าน DYTORRO">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.7-.8L3 21l1.9-5A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"></path>
+    <path d="M12 3a9 9 0 0 0-8.1 12.9L3 21l5.1-.9A9 9 0 1 0 12 3z"></path>
+    <path d="M9.5 10.5h.01M14.5 10.5h.01" stroke-width="2.4"></path>
+    <path d="M9.5 14c.8.8 1.6 1.2 2.5 1.2s1.7-.4 2.5-1.2"></path>
   </svg>
   <span id="pimbot-dot"></span>
 </button>
 
-<div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม">
+<div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม DYTORRO">
   <div id="pimbot-head">
     <div id="pimbot-head-actions">
-      <a id="pimbot-human-btn" href="Teammember.html" title="ติดต่อทีมงาน DYSHIRO">ติดต่อเจ้าหน้าที่</a>
+      <a id="pimbot-human-btn" href="Teammember.html" title="ติดต่อทีมงาน DYTORRO">ติดต่อเจ้าหน้าที่</a>
       <button id="pimbot-close" aria-label="ปิด">×</button>
     </div>
-    <b>DYSHIRO Assistant</b>
-    <small id="pimbot-status">กำลังเตรียมระบบ...</small>
+    <div class="pimbot-brand-row">
+      <div class="pimbot-avatar">
+        <img src="phoo.png" alt="DYTORRO" onerror="this.style.display='none'">
+      </div>
+      <div>
+        <b>DYTORRO Assistant</b>
+        <small id="pimbot-status">กำลังเตรียมระบบ...</small>
+      </div>
+    </div>
   </div>
 
   <div id="pimbot-warn">
-    <b>นี่คือผู้ช่วยอัตโนมัติ ไม่ใช่พนักงาน</b>
-    คำตอบอ้างอิงจากข้อมูลร้าน DYSHIRO หากต้องการติดต่อพนักงานจริง โทร 089-000-0000
+    <b>นี่คือผู้ช่วยอัตโนมัติ (AI) ไม่ใช่พนักงาน</b>
+    คำตอบอ้างอิงจากข้อมูลร้าน DYTORRO หากต้องการติดต่อพนักงานจริง โทร 089-000-0000
   </div>
 
   <div id="pimbot-log"></div>
@@ -434,7 +518,7 @@ async function askBot(question){
   </div>
 
   <div id="pimbot-row">
-    <input id="pimbot-q" type="text" placeholder="พิมพ์คำถามเกี่ยวกับร้าน DYSHIRO..." disabled>
+    <input id="pimbot-q" type="text" placeholder="พิมพ์คำถามเกี่ยวกับร้าน DYTORRO..." disabled>
     <button id="pimbot-send" disabled>ส่ง</button>
   </div>
 </div>`;
@@ -447,7 +531,7 @@ async function askBot(question){
   onReady = () => {
     $("pimbot-q").disabled = false;
     $("pimbot-send").disabled = false;
-    say("สวัสดีครับ ยินดีต้อนรับสู่ร้าน DYSHIRO สอบถามข้อมูลสินค้า ไซซ์ หรือการจัดส่งได้เลยครับ", "bot");
+    say("สวัสดีครับ ยินดีต้อนรับสู่ร้าน DYTORRO สอบถามข้อมูลสินค้า ไซซ์ หรือการจัดส่งได้เลยครับ", "bot");
   };
 
   function say(text, who, src){
