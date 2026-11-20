@@ -1,0 +1,160 @@
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Catalog</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="shortcut icon" href="LOGO.png" type="image/x-icon">
+<link rel="stylesheet" href="Fate.css"/>
+</head>
+
+<body>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">
+            <img src="FGO.png" alt="FGO">
+        </div>
+        <div>
+          <h1>DYSHIRO SHOP</h1>
+          <a class="btn btn-primary" href="index.html">หน้าหลัก</a>
+          <div style="font-size:13px;color:var(--muted)">สินค้ามากมาย</div>
+        </div>
+      </div>
+      <div class="searchbar" role="search">
+        <input id="search" placeholder="ค้นหาสินค้า" aria-label="ค้นหาสินค้า" />
+      </div>
+      <div class="controls">
+        <button class="btn" id="sortBtn" aria-haspopup="listbox" aria-expanded="false">เรียง: แนะนำ</button>
+        <button class="btn" id="cartBtn">ตะกร้า (-0)</button>
+      </div>
+    </header>
+
+    <main class="main" role="main">
+      <aside class="left" aria-label="ตัวกรอง">
+        <div class="filter-section">
+          <h4>หมวดหมู่</h4>
+          <div>
+            <span class="chip" data-cat="all">ทั้งหมด</span>
+            <span class="chip" data-cat="">เสื้อยืด</span>
+            <span class="chip" data-cat="">ลวดลาย</span>
+            <span class="chip" data-cat="">สีสัน</span>
+            <span class="chip" data-cat="">ขนาด</span>
+          </div>
+        </div>
+        <div class="filter-section">
+          <h4>ราคา</h4>
+          <div style="display:flex;gap:10px">
+            <input id="minPrice" type="number" placeholder="ต่ำสุด" style="width:20px;flex:1;padding:8px;border-radius:8px;border:1px solid #eef2f7"/>
+            <input id="maxPrice" type="number" placeholder="สูงสุด" style="width:20px;flex:1;padding:8px;border-radius:8px;border:1px solid #eef2f7"/>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="chip" id="applyPrice">ใช้</button>
+            <button class="chip" id="clearPrice">ล้าง</button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>แบรนด์</h4>
+          <label style="display:block;margin-bottom:6px"><input type="checkbox" class="brand-filter" value="BrandA" /> BrandA</label>
+          <label style="display:block;margin-bottom:6px"><input type="checkbox" class="brand-filter" value="BrandB" /> BrandB</label>
+          <label style="display:block"><input type="checkbox" class="brand-filter" value="BrandC" /> BrandC</label>
+        </div>
+
+        <div class="filter-section">
+          <h4>คะแนนรีวิว</h4>
+          <div>
+            <span class="chip" data-rating="4">4★ ขึ้นไป</span>
+            <span class="chip" data-rating="3">3★ ขึ้นไป</span>
+          </div>
+        </div>
+      </aside>
+
+      <section class="right">
+        <div id="resultsInfo" style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <div class="pill" id="count">0 สินค้า</div>
+          <div style="flex:1"></div>
+          <div class="badge" id="delivery">ส่งฟรีเมื่อสั่งครบ 1,000,000฿</div>
+        </div>
+
+<div id="grid" class="grid" aria-live="polite">
+    <div class="card" data-cat="fashion" data-brand="BrandA" data-price="150">
+    <a href="#" class="thumbnail">
+      <img src="CAPCAT.png" alt="เสื้อยืดลวดลายแมว" loading="lazy"/>
+    </a>
+    <div class="meta">
+      <div class="title">เสื้อยืดลวดลายแมว</div>
+      <div class="price-row">
+        <span class="price">150฿</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="primary">หยิบใส่ตะกร้า</button>
+      <button class="secondary quick-view-btn">รายละเอียด</button>
+    </div>
+  </div>
+
+  <div class="card" data-cat="mobile" data-brand="BrandB" data-price="12500" data-rating="4.8">
+    <a href="#" class="thumbnail">
+      <img src="JP.png" alt="สมาร์ทโฟนรุ่นใหม่ล่าสุด" loading="lazy"/>
+    </a>
+    <div class="meta">
+      <div class="title">เสื้อยืดสีดำลวดลายญี่ปุ่น</div>
+      <div class="price-row">
+        <span class="price">150฿</span>
+        <span class="old">150,000฿</span> 
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="primary">หยิบใส่ตะกร้า</button>
+      <button class="secondary quick-view-btn">รายละเอียด</button>
+    </div>
+  </div>
+
+  <div class="card" data-cat="home" data-brand="BrandA" data-price="2500" data-rating="4.2">
+    <a href="#" class="thumbnail">
+      <img src="PANDA.png" alt="เครื่องดูดฝุ่นไร้สาย" loading="lazy"/>
+    </a>
+    <div class="meta">
+      <div class="title">เสื้อยืดลวดลายแพนด้า</div>
+      <div class="price-row">
+        <span class="price">150฿</span>
+        <span class="old">199,999฿</span> 
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="primary">หยิบใส่ตะกร้า</button>
+      <button class="secondary quick-view-btn">รายละเอียด</button>
+    </div>
+  </div>
+</div>
+
+        <div id="empty" class="empty" style="display:none">ไม่พบสินค้าที่ตรงกับการค้นหา</div>
+      </section>
+    </main>
+
+    <footer>ตัวอย่างหน้าร้านค้า พร้อมตัวอย่างสินค้า</footer>
+  </div>
+
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" role="document">
+      <div>
+        <div class="modal-thumb" id="modalImage"></div>
+      </div>
+      <div>
+        <h3 id="modalTitle"></h3>
+        <p id="modalBrand" style="color:var(--muted);margin-top:4px"></p>
+        <div style="margin-top:10px" id="modalPriceRow"></div>
+        <p id="modalDesc" style="margin-top:10px;color:var(--muted)"></p>
+        <div style="margin-top:16px;display:flex;gap:8px">
+          <button class="primary" id="modalAdd">เพิ่มใส่ตะกร้า</button>
+          <button class="secondary" id="modalClose">ปิด</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
