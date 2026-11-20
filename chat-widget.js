@@ -1,5 +1,5 @@
 /* ==================================================================
-   chat-widget.js  ·  แชตบอตสำหรับร้านเสื้อผ้า DYTORRO
+   chat-widget.js  ·  แชตบอตสำหรับร้านเสื้อผ้า DYTORRO (Mobile-Ready)
    ================================================================== */
 
 (function(){
@@ -226,7 +226,6 @@ async function askLLM(prompt){
 
 function bootLine(){
   const files = new Set(CHUNKS.map(c => c.source)).size;
-  const pv = PROVIDERS[CFG.PROVIDER]?.name ?? CFG.PROVIDER;
   const m = MODE === "vector" ? "เวกเตอร์" : "เทียบตัวอักษร";
   return `พร้อมใช้งาน · เอกสาร ${files} ไฟล์ (${m})`;
 }
@@ -288,16 +287,14 @@ async function askBot(question){
 }
 
 /* ==================================================================
-   ส่วนหน้าตาของกล่องแชต โทนพรีเมียม DYTORRO (Modern Obsidian & Blue)
+   ส่วนหน้าตาของกล่องแชต โทนพรีเมียม DYTORRO + รองรับหน้าจอมือถือ 100%
    ================================================================== */
 (function(){
 
   const C = {
     main:    "#09090B",
     accent:  "#2563EB",
-    accent2: "#1D4ED8",
     ink:     "#18181B",
-    soft:    "#A1A1AA",
     line:    "#E4E4E7",
     bg:      "#F8FAFC",
     card:    "#FFFFFF",
@@ -305,88 +302,100 @@ async function askBot(question){
   };
 
   const css = `
-/* ปุ่มไอคอนแชตพรีเมียมมุมขวาล่าง */
+/* ปุ่มไอคอนแชตหุ่นยนต์ AI พรีเมียมมุมขวาล่าง */
 #pimbot-btn{
-  position:fixed; right:24px; bottom:24px; z-index:9999;
-  width:62px; height:62px; border-radius:50%;
-  border:1.5px solid rgba(255,255,255,0.22);
+  position:fixed; right:20px; bottom:20px; z-index:9999;
+  width:58px; height:58px; border-radius:50%;
+  border:1.5px solid rgba(255,255,255,0.25);
   cursor:pointer;
-  background: linear-gradient(135deg, #2563EB 0%, #1E3A8A 60%, #09090B 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #1E3A8A 58%, #09090B 100%);
   color:#fff;
-  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.45), 0 0 0 0 rgba(37, 99, 235, 0.5);
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.45), 0 0 0 0 rgba(37, 99, 235, 0.5);
   display:grid; place-items:center;
   transition: transform .25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow .25s ease;
   animation: pimbotPulse 3s infinite;
   margin-bottom: env(safe-area-inset-bottom, 0px);
 }
 @keyframes pimbotPulse {
-  0%   { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0.55); }
-  70%  { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 13px rgba(37, 99, 235, 0); }
-  100% { box-shadow: 0 10px 28px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0); }
+  0%   { box-shadow: 0 8px 24px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0.55); }
+  70%  { box-shadow: 0 8px 24px rgba(37, 99, 235, 0.42), 0 0 0 12px rgba(37, 99, 235, 0); }
+  100% { box-shadow: 0 8px 24px rgba(37, 99, 235, 0.42), 0 0 0 0 rgba(37, 99, 235, 0); }
 }
 #pimbot-btn:hover{
-  transform: translateY(-3px) scale(1.07);
-  box-shadow: 0 14px 34px rgba(37, 99, 235, 0.65);
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.65);
 }
-#pimbot-btn svg{width:30px; height:30px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+#pimbot-btn svg{width:28px; height:28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.3))}
 #pimbot-dot{
-  position:absolute; top:3px; right:3px; width:14px; height:14px;
+  position:absolute; top:2px; right:2px; width:13px; height:13px;
   border-radius:50%; background:#10B981; border:2.5px solid #09090B;
   box-shadow: 0 0 8px #10B981;
 }
 
-/* กล่องแชตหลัก */
+/* กล่องแชตหลัก (Desktop) */
 #pimbot-panel{
-  position:fixed; right:24px; bottom:98px; z-index:9999;
-  width:min(395px, calc(100vw - 32px));
-  background:${C.card}; border:1px solid rgba(37,99,235,0.18); border-radius:18px;
-  overflow:hidden; display:none;
-  box-shadow:0 20px 55px rgba(9, 9, 11, 0.28);
+  position:fixed; right:20px; bottom:90px; z-index:9999;
+  width:min(385px, calc(100vw - 24px));
+  max-height: calc(100dvh - 110px);
+  background:${C.card}; border:1px solid rgba(37,99,235,0.2); border-radius:16px;
+  overflow:hidden; display:none; flex-direction:column;
+  box-shadow:0 20px 50px rgba(9, 9, 11, 0.28);
   font-family:'Anuphan','Noto Sans Thai','Segoe UI',system-ui,sans-serif;
-  font-size:15px; line-height:1.65; color:${C.ink};
+  font-size:14.5px; line-height:1.6; color:${C.ink};
   margin-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing:border-box;
+}
+#pimbot-panel *, #pimbot-panel *::before, #pimbot-panel *::after{
+  box-sizing:border-box;
 }
 #pimbot-panel.pimbot-open{
-  display:block;
-  animation: pimbotSlideUp .24s cubic-bezier(0.22, 1, 0.36, 1);
+  display:flex;
+  animation: pimbotSlideUp .22s cubic-bezier(0.22, 1, 0.36, 1);
 }
 @keyframes pimbotSlideUp {
-  from { opacity:0; transform: translateY(14px) scale(0.97); }
+  from { opacity:0; transform: translateY(12px) scale(0.98); }
   to   { opacity:1; transform: translateY(0) scale(1); }
 }
 
 /* ส่วนหัวกล่องแชต */
 #pimbot-head{
   background: linear-gradient(135deg, #09090B 0%, #1E293B 100%);
-  color:#fff; padding:15px 18px; position:relative;
+  color:#fff; padding:12px 14px; position:relative; flex-shrink:0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
 }
 .pimbot-brand-row{
-  display:flex; align-items:center; gap:10px; padding-right:115px;
+  display:flex; align-items:center; gap:9px; min-width:0; flex:1;
 }
 .pimbot-avatar{
-  width:36px; height:36px; border-radius:50%;
+  width:34px; height:34px; border-radius:50%;
   background: linear-gradient(135deg, #2563EB, #60A5FA);
   display:grid; place-items:center; flex-shrink:0;
-  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.45);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.45);
   overflow:hidden;
 }
 .pimbot-avatar img{
-  width:24px; height:24px; object-fit:contain;
+  width:22px; height:22px; object-fit:contain;
 }
-#pimbot-head b{font-size:15.5px; font-weight:700; letter-spacing:0.3px; display:block; line-height:1.25}
-#pimbot-head small{display:block; font-size:11.5px; color:#94A3B8; margin-top:2px}
+.pimbot-title-wrap{min-width:0; flex:1}
+#pimbot-head b{
+  font-size:14.5px; font-weight:700; display:block; line-height:1.25;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+#pimbot-head small{
+  display:block; font-size:11px; color:#94A3B8; margin-top:1px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
 
 #pimbot-head-actions{
-  position:absolute; top:14px; right:12px;
-  display:flex; align-items:center; gap:6px;
+  display:flex; align-items:center; gap:6px; flex-shrink:0;
 }
 #pimbot-human-btn{
-  background: rgba(37, 99, 235, 0.22);
+  background: rgba(37, 99, 235, 0.25);
   color:#93C5FD;
   border:1px solid rgba(96, 165, 250, 0.45);
   border-radius:999px;
-  padding:4px 11px; font-size:11.5px; font-weight:600;
+  padding:4px 10px; font-size:11px; font-weight:600;
   text-decoration:none; cursor:pointer; white-space:nowrap;
   transition: all .2s;
 }
@@ -394,80 +403,124 @@ async function askBot(question){
   background:#2563EB; color:#fff; border-color:#2563EB;
 }
 #pimbot-close{
-  background:rgba(255,255,255,0.08); border:0; color:#CBD5E1;
-  font-size:19px; line-height:1; border-radius:50%;
+  background:rgba(255,255,255,0.1); border:0; color:#CBD5E1;
+  font-size:18px; line-height:1; border-radius:50%;
   cursor:pointer; width:28px; height:28px; display:grid; place-items:center;
   transition: background .2s, color .2s;
 }
-#pimbot-close:hover{background:rgba(255,255,255,0.2); color:#fff}
+#pimbot-close:hover{background:rgba(255,255,255,0.22); color:#fff}
 
 /* แถบแจ้งเตือน AI */
 #pimbot-warn{
   background: #EFF6FF;
   border-bottom:1px solid #DBEAFE;
-  padding:9px 16px; font-size:12px; line-height:1.55; color:#1E3A8A;
+  padding:8px 14px; font-size:11.5px; line-height:1.5; color:#1E3A8A;
+  flex-shrink:0;
 }
 #pimbot-warn b{color:#1D4ED8}
 
 /* พื้นที่ข้อความแชต */
-#pimbot-log{height:285px; overflow-y:auto; padding:14px 16px; background:${C.bg}}
+#pimbot-log{
+  height:255px; overflow-y:auto; padding:12px 14px; background:${C.bg};
+  flex:1; min-height:140px;
+}
 .pimbot-m{
-  max-width:85%; padding:11px 14px; border-radius:14px; margin:8px 0;
-  font-size:14px; white-space:pre-wrap; line-height:1.6;
+  max-width:86%; padding:9px 13px; border-radius:13px; margin:7px 0;
+  font-size:13.5px; white-space:pre-wrap; line-height:1.55;
+  word-break:break-word;
 }
 .pimbot-me{
   margin-left:auto;
   background: linear-gradient(135deg, #2563EB, #1D4ED8);
   color:#fff; border-bottom-right-radius:4px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
 }
 .pimbot-bot{
   background:${C.card}; border:1px solid ${C.line};
   border-bottom-left-radius:4px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
 }
 .pimbot-src{
-  display:block; margin-top:7px; padding-top:5px;
+  display:block; margin-top:6px; padding-top:4px;
   border-top:1px dashed #E2E8F0;
-  font-size:11px; color:${C.muted};
+  font-size:10.5px; color:${C.muted};
 }
 
-/* ปุ่มคำถามแนะนำ */
-#pimbot-chips{padding:4px 14px 10px; display:flex; flex-wrap:wrap; gap:6px; background:${C.bg}}
+/* ปุ่มคำถามแนะนำ (เลื่อนซ้าย-ขวาได้บนมือถือ ไม่กินพื้นที่แนวตั้ง) */
+#pimbot-chips{
+  padding:6px 12px 8px; display:flex; flex-wrap:wrap; gap:5px;
+  background:${C.bg}; flex-shrink:0;
+}
 #pimbot-chips span{
-  font-size:12px; padding:5px 12px;
+  font-size:11.5px; padding:4px 10px;
   border:1px solid #CBD5E1; border-radius:999px;
   cursor:pointer; color:#334155; background:${C.card};
-  transition: all .2s;
+  transition: all .18s;
 }
 #pimbot-chips span:hover{
   border-color:#2563EB; color:#2563EB; background:#EFF6FF;
-  transform: translateY(-1px);
 }
 
 /* ช่องพิมพ์ข้อความและปุ่มส่ง */
-#pimbot-row{display:flex; gap:8px; padding:11px 14px; border-top:1px solid ${C.line}; background:${C.card}}
+#pimbot-row{
+  display:flex; gap:7px; padding:10px 12px;
+  border-top:1px solid ${C.line}; background:${C.card}; flex-shrink:0;
+}
 #pimbot-q{
-  flex:1; padding:10px 14px; font-family:inherit; font-size:14px;
-  border:1.5px solid #CBD5E1; border-radius:11px; background:#F8FAFC; color:${C.ink};
-  transition: border-color .2s, background .2s;
+  flex:1; min-width:0; padding:9px 12px; font-family:inherit; font-size:14px;
+  border:1.5px solid #CBD5E1; border-radius:10px; background:#F8FAFC; color:${C.ink};
 }
 #pimbot-q:focus{
   outline:none; border-color:#2563EB; background:#FFFFFF;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
 }
 #pimbot-send{
-  padding:10px 18px; border:0; border-radius:11px;
+  padding:9px 16px; border:0; border-radius:10px; flex-shrink:0;
   background: linear-gradient(135deg, #2563EB, #1D4ED8);
   color:#FFFFFF; font-family:inherit; font-size:14px; font-weight:600;
-  cursor:pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-  transition: transform .15s, box-shadow .15s;
-}
-#pimbot-send:hover:not(:disabled){
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.42);
+  cursor:pointer; box-shadow: 0 3px 10px rgba(37, 99, 235, 0.3);
 }
 #pimbot-send:disabled{opacity:.45; cursor:default; box-shadow:none}
+
+/* ================= ปรับขนาดให้พอดีกับหน้าจอมือถือ (Mobile) ================= */
+@media (max-width: 480px){
+  #pimbot-btn{
+    right:14px; bottom:14px; width:50px; height:50px;
+  }
+  #pimbot-btn svg{width:24px; height:24px;}
+  #pimbot-dot{width:11px; height:11px; top:1px; right:1px;}
+
+  #pimbot-panel{
+    left:10px; right:10px; bottom:74px;
+    width:auto;
+    max-height: calc(100dvh - 88px);
+    border-radius:14px;
+  }
+  #pimbot-head{padding:10px 12px;}
+  .pimbot-avatar{width:30px; height:30px;}
+  .pimbot-avatar img{width:18px; height:18px;}
+  #pimbot-head b{font-size:13.5px;}
+  #pimbot-head small{font-size:10.5px;}
+  #pimbot-human-btn{padding:3px 8px; font-size:10.5px;}
+  #pimbot-close{width:26px; height:26px; font-size:16px;}
+
+  #pimbot-warn{padding:7px 12px; font-size:11px; line-height:1.4;}
+  #pimbot-log{height:210px; padding:10px 12px;}
+  .pimbot-m{font-size:13px; padding:8px 11px; max-width:90%;}
+
+  #pimbot-chips{
+    flex-wrap:nowrap; overflow-x:auto;
+    padding:5px 12px 7px;
+    -webkit-overflow-scrolling:touch;
+  }
+  #pimbot-chips::-webkit-scrollbar{display:none;}
+  #pimbot-chips span{white-space:nowrap; flex-shrink:0; font-size:11px; padding:4px 9px;}
+
+  #pimbot-row{padding:8px 10px; gap:6px;}
+  /* ตั้ง 16px บนมือถือเพื่อกัน iOS Safari ซูมหน้าจออัตโนมัติเวลาแตะพิมพ์ */
+  #pimbot-q{font-size:16px; padding:7px 10px;}
+  #pimbot-send{padding:7px 14px; font-size:13.5px;}
+}
 `;
 
   const style = document.createElement("style");
@@ -476,30 +529,36 @@ async function askBot(question){
 
   const wrap = document.createElement("div");
   wrap.innerHTML = `
-<button id="pimbot-btn" aria-label="เปิดผู้ช่วย DYTORRO" title="คุยกับผู้ช่วย AI ร้าน DYTORRO">
+<button id="pimbot-btn" aria-label="เปิดผู้ช่วย AI DYTORRO" title="คุยกับผู้ช่วย AI ร้าน DYTORRO">
+  <!-- โลโก้ไอคอนหุ่นยนต์ AI + ประกายดาว -->
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M12 3a9 9 0 0 0-8.1 12.9L3 21l5.1-.9A9 9 0 1 0 12 3z"></path>
-    <path d="M9.5 10.5h.01M14.5 10.5h.01" stroke-width="2.4"></path>
-    <path d="M9.5 14c.8.8 1.6 1.2 2.5 1.2s1.7-.4 2.5-1.2"></path>
+    <path d="M12 2v3"></path>
+    <circle cx="12" cy="2" r="1" fill="currentColor"></circle>
+    <rect x="4" y="6" width="16" height="12" rx="4"></rect>
+    <circle cx="9" cy="11.5" r="1.3" fill="currentColor" stroke="none"></circle>
+    <circle cx="15" cy="11.5" r="1.3" fill="currentColor" stroke="none"></circle>
+    <path d="M9.5 15h5"></path>
+    <path d="M2 11v2M22 11v2"></path>
+    <path d="M8 21h8"></path>
   </svg>
   <span id="pimbot-dot"></span>
 </button>
 
 <div id="pimbot-panel" role="dialog" aria-label="กล่องสอบถาม DYTORRO">
   <div id="pimbot-head">
+    <div class="pimbot-brand-row">
+      <div class="pimbot-avatar">
+        <img src="LOGO.png" alt="DYTORRO" onerror="this.src='phoo.png'">
+      </div>
+      <div class="pimbot-title-wrap">
+        <b>DYTORRO AI Assistant</b>
+        <small id="pimbot-status">กำลังเตรียมระบบ...</small>
+      </div>
+    </div>
     <div id="pimbot-head-actions">
       <a id="pimbot-human-btn" href="Teammember.html" title="ติดต่อทีมงาน DYTORRO">ติดต่อเจ้าหน้าที่</a>
       <button id="pimbot-close" aria-label="ปิด">×</button>
-    </div>
-    <div class="pimbot-brand-row">
-      <div class="pimbot-avatar">
-        <img src="phoo.png" alt="DYTORRO" onerror="this.style.display='none'">
-      </div>
-      <div>
-        <b>DYTORRO Assistant</b>
-        <small id="pimbot-status">กำลังเตรียมระบบ...</small>
-      </div>
     </div>
   </div>
 
@@ -573,7 +632,7 @@ async function askBot(question){
 
   $("pimbot-btn").addEventListener("click", () => {
     const open = $("pimbot-panel").classList.toggle("pimbot-open");
-    if (open) $("pimbot-q").focus();
+    if (open && window.innerWidth > 480) $("pimbot-q").focus();
   });
   $("pimbot-close").addEventListener("click", () =>
     $("pimbot-panel").classList.remove("pimbot-open"));
